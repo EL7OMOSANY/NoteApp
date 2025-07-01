@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class SaveNoteButton extends StatelessWidget {
   const SaveNoteButton({super.key,required this.ontap});
   final void Function()? ontap;
