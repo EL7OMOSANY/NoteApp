@@ -1,9 +1,13 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_book_app/cubits/cubit/add_note_cubit.dart';
+import 'package:note_book_app/models/note_model.dart';
 import 'package:note_book_app/widgets/custom_text_field.dart';
 import 'package:note_book_app/widgets/save_note_button.dart';
 
 class AddNoteColumnFields extends StatefulWidget {
-  AddNoteColumnFields({super.key, required this.headTitle});
+  const AddNoteColumnFields({super.key, required this.headTitle});
   final String headTitle;
 
   @override
@@ -49,10 +53,12 @@ class _AddNoteColumnFieldsState extends State<AddNoteColumnFields> {
           ),
           const SizedBox(height: 20),
           SaveNoteButton(
-            ontap: () {
+            ontap: () async {
               if (formKey.currentState!.validate()) {
                 formKey.currentState!.save();
-                Navigator.pop(context);
+                BlocProvider.of<AddNoteCubit>(context).addNote(
+                  note: NoteModel(title: noteTitle!, content: noteBody!),
+                );
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: Colors.blueGrey.shade700,
